@@ -1,0 +1,351 @@
+{
+  "name": "My workflow 9",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "إدخال عرض مورد",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "اسم المورد",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "السعر",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "مدة التوصيل (أيام)",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "تقييم المورد (من 5)",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "رمز طلب المقارنة (RFQ ID)",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4921c84f-a9f9-4ae0-8c79-3c823fc0d107",
+      "name": "On form submission",
+      "webhookId": "f566dd8f-73f5-4723-ac20-03c858f8b15a"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1EUuS0shB_x6KRCAButhgHnM1VQ6h-T0DxnuJz8osNPU",
+          "mode": "list",
+          "cachedResultName": "Offers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EUuS0shB_x6KRCAButhgHnM1VQ6h-T0DxnuJz8osNPU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "الورقة1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EUuS0shB_x6KRCAButhgHnM1VQ6h-T0DxnuJz8osNPU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rfqId": "={{ $json['رمز طلب المقارنة (RFQ ID)'] }}",
+            "supplier": "={{ $json['اسم المورد'] }}",
+            "price": "={{ $json['السعر'] }}",
+            "deliveryDays": "={{ $json['مدة التوصيل (أيام)'] }}",
+            "rating": "={{ $json['تقييم المورد (من 5)'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "rfqId",
+              "displayName": "rfqId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "supplier",
+              "displayName": "supplier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "deliveryDays",
+              "displayName": "deliveryDays",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "edb68da4-7430-43b7-998a-12d07acd0144",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5n1ZTwrHvTy8E86N",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1EUuS0shB_x6KRCAButhgHnM1VQ6h-T0DxnuJz8osNPU",
+          "mode": "list",
+          "cachedResultName": "Offers",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EUuS0shB_x6KRCAButhgHnM1VQ6h-T0DxnuJz8osNPU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "الورقة1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EUuS0shB_x6KRCAButhgHnM1VQ6h-T0DxnuJz8osNPU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        0
+      ],
+      "id": "f5be4de5-48c9-4124-9012-00cb9e946427",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5n1ZTwrHvTy8E86N",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const offers = items.map(i => i.json);\nconst prices = offers.map(o => parseFloat(o.price));\nconst deliveries = offers.map(o => parseFloat(o.deliveryDays));\nconst minPrice = Math.min(...prices);\nconst minDelivery = Math.min(...deliveries);\n\nconst scored = offers.map(o => {\n  const priceScore = (minPrice / parseFloat(o.price)) * 40;\n  const deliveryScore = (minDelivery / parseFloat(o.deliveryDays)) * 30;\n  const ratingScore = (parseFloat(o.rating) / 5) * 30;\n  const totalScore = (priceScore + deliveryScore + ratingScore).toFixed(1);\n  return { ...o, totalScore };\n}).sort((a,b) => b.totalScore - a.totalScore);\n\nreturn [{ json: { offers: scored, rfqId: offers[0]?.rfqId } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "f596b94e-0790-45a5-b8db-fb785fd4f89f",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=أنت مسؤول مشتريات. راجع ترتيب الموردين حسب Score التالي واكتب توصية نهائية بأي مورد يجب اختياره ولماذا، مع ذكر أي مخاوف من العروض الأخرى. أعد النتيجة كـ JSON فقط: {\"recommended_supplier\": \"...\", \"reasoning\": \"...\", \"concerns\": \"...\"}\n\nالعروض مرتبة حسب Score: {{ JSON.stringify($json.offers) }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        896,
+        0
+      ],
+      "id": "7b20058f-c3bc-430c-8980-08d087822fe8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        968,
+        232
+      ],
+      "id": "68e2fb51-ffc1-4de0-afc3-3c15fe6b9621",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "g38xyssK5TRcl82w",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw =$input.first().json.output;\nconst cleaned = raw.replace(/```json|```/g, '').trim();\nconst parsed = JSON.parse(cleaned);\nreturn [{ json: { ...parsed, rfqId:$('Code in JavaScript').first().json.rfqId , offers:$('Code in JavaScript').first().json.offers } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        0
+      ],
+      "id": "a4684c4f-a0b1-44f6-85b4-90a267894123",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "sendTo": "fhm156@hotmail.com",
+        "subject": "=📊 تقرير مقارنة الموردين - RFQ  {{ $json.rfqId }}",
+        "message": "=<div dir=\"rtl\" style=\"font-family: Arial, sans-serif; line-height: 1.8; text-align: right;\">    <h2>📊 تقرير مقارنة الموردين</h2>    <p>     <strong>🏆 المورد الموصى به:</strong>     {{ $json.recommended_supplier }}   </p>    <h3>سبب التوصية</h3>   <p>     {{ $json.reasoning }}   </p>    <h3>⚠️ ملاحظات على العروض الأخرى</h3>   <p>     {{ $json.concerns }}   </p>    <hr>    <h3>📋 ترتيب جميع العروض</h3>    <ul>     {{       $json.offers.map(o =>         '<li><strong>' + o.supplier + '</strong> — Score: ' + o.totalScore +         ' | السعر: ' + o.price +         ' | التوصيل: ' + o.deliveryDays + ' يوم' +         ' | التقييم: ' + o.rating + '/5</li>'       ).join('')     }}   </ul>    <hr>    <p style=\"font-size: 12px;\">     تم إنشاء هذا التقرير تلقائياً بواسطة نظام مقارنة الموردين.   </p>  </div>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1472,
+        0
+      ],
+      "id": "c5260fee-0459-4c0f-9fcc-4a80ed636708",
+      "name": "Send a message",
+      "webhookId": "4c28c260-f628-40fc-8187-8a2807ff5f88",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JDWqPw08fOqLMwmh",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f23f6a99-b368-49b5-9ff4-6d627bd63d31",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a5a684b75324e6d2c88eba78c40965ea385652d197518547fda9971ebd20d242"
+  },
+  "nodeGroups": [],
+  "id": "oSVhIDrnRLKGpX8N",
+  "tags": []
+}
