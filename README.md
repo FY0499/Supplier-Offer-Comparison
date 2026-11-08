@@ -2,7 +2,7 @@
 
 I built this n8n workflow to collect supplier offers, compare them using price, delivery time, and supplier rating, and use AI to prepare a final recommendation.
 
-<img width="745" height="237" alt="image" src="https://github.com/user-attachments/assets/0e469ff0-e8ab-46c1-b6a6-993487c51e23" />
+<img width="745" height="237" alt="Supplier Offer Comparison workflow demo" src="https://github.com/user-attachments/assets/0e469ff0-e8ab-46c1-b6a6-993487c51e23" />
 
 ## How it works
 
