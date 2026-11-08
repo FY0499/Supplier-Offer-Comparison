@@ -1,31 +1,27 @@
 # Supplier Offer Comparison
 
-An n8n workflow that collects supplier offers, scores them using price, delivery time, and supplier rating, and uses AI to produce a final recommendation.
+I built this n8n workflow to collect supplier offers, compare them using price, delivery time, and supplier rating, and use AI to prepare a final recommendation.
 
 ## How it works
 
-1. A user submits supplier details, price, delivery days, rating, and an RFQ identifier through a form.
-2. The workflow stores each offer in Google Sheets and retrieves the available offers.
-3. JavaScript calculates a weighted score using price, delivery time, and supplier rating, then ranks the offers.
-4. A Gemini-powered AI agent explains the ranking and recommends a supplier.
-5. The final comparison report is sent by email.
+1. A user submits a supplier's name, price, delivery time, rating, and RFQ ID through a form.
+2. Each submitted offer is saved to Google Sheets, and the workflow retrieves the available offers.
+3. JavaScript calculates a score for each offer using price (40%), delivery time (30%), and supplier rating (30%), then ranks the results.
+4. Google Gemini reviews the ranked offers and recommends a supplier with an explanation and any concerns.
+5. The comparison report is sent by email with the recommendation and offer details.
+
+## Main features
+
+- Supplier offer submission form.
+- Weighted scoring based on price, delivery time, and rating.
+- Automatic offer ranking.
+- AI-generated supplier recommendation.
+- Email report with the ranking and comparison details.
 
 ## Technologies
 
-- n8n
-- Google Gemini
-- Google Sheets
-- Gmail
-- JavaScript
-- n8n Forms
+n8n, Google Sheets, Google Gemini, JavaScript, AI Agent, Gmail, and n8n Forms.
 
 ## Setup
 
-1. Import workflow.json into n8n.
-2. Configure Google Sheets, Gemini, and Gmail credentials.
-3. Connect your supplier offers sheet and verify its column names.
-4. Submit several offers with the same RFQ identifier to test the comparison.
-
-## Notes
-
-This repository contains the exported n8n workflow. Configure your own credentials and integrations in n8n before running it.
+Import [workflow.json](./workflow.json) into n8n, configure your Google Sheets, Gemini, and Gmail credentials, then connect your supplier offers sheet and test the workflow with several sample offers.
